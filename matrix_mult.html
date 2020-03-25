@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>201721782 공현주</title>
+
+    <meta charset="UTF-8" />
+    <meta name="desciption" content="4x4 matrix multiplication" />
+    <meta name="author" content="hyeonju kong" />
+
+    <style>
+      body,
+      html {
+        height: 100%;
+        overflow: hidden;
+        text-align: center;
+        font-family: verdana;
+        background-color: rgb(247, 232, 237);
+      }
+      main {
+        padding: 30px;
+      }
+      hr {
+        margin: 0px;
+        color: rgb(204, 69, 114);
+      }
+      p {
+        border: 1px solid powderblue;
+        padding: 30px;
+        margin: 50px;
+      }
+      table {
+        display: inline-block;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1 style="font-size:40px; color:rgb(204, 69, 114)">Computer Graphics</h1>
+
+    <h2
+      style="background-color:rgb(204, 69, 114);margin:0px;font-size:25px; color:rgb(247, 232, 237);"
+      title="컴퓨터 그래픽스 첫번째 과제"
+    >
+      4x4 matrix multiplication program
+    </h2>
+    <hr />
+
+    <main>
+      <br />
+      <br />
+      <br />
+
+      <table>
+        <tr>
+          <th>MATRIX A</th>
+          <th>1열</th>
+          <th>2열</th>
+          <th>3열</th>
+          <th>4열</th>
+        </tr>
+        <tr>
+          <td>1행</td>
+          <td>
+            <input type="text" name="text" size="2" id="A11" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="A12" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="A13" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="A14" />
+          </td>
+        </tr>
+        <tr>
+          <td>2행</td>
+          <td>
+            <input type="text" name="text" size="2" id="A21" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="A22" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="A23" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="A24" />
+          </td>
+        </tr>
+        <tr>
+          <td>3행</td>
+          <td>
+            <input type="text" name="text" size="2" id="A31" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="A32" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="A33" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="A34" />
+          </td>
+        </tr>
+        <tr>
+          <td>4행</td>
+          <td>
+            <input type="text" name="text" size="2" id="A41" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="A42" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="A43" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="A44" />
+          </td>
+        </tr>
+      </table>
+
+      <span>X</span>
+
+      <table>
+        <tr>
+          <th>Matrix B</th>
+          <th>1열</th>
+          <th>2열</th>
+          <th>3열</th>
+          <th>4열</th>
+        </tr>
+        <tr>
+          <td>1행</td>
+          <td>
+            <input type="text" name="text" size="2" id="B11" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="B12" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="B13" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="B14" />
+          </td>
+        </tr>
+        <tr>
+          <td>2행</td>
+          <td>
+            <input type="text" name="text" size="2" id="B21" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="B22" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="B23" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="B24" />
+          </td>
+        </tr>
+        <tr>
+          <td>3행</td>
+          <td>
+            <input type="text" name="text" size="2" id="B31" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="B32" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="B33" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="B34" />
+          </td>
+        </tr>
+        <tr>
+          <td>4행</td>
+          <td>
+            <input type="text" name="text" size="2" id="B41" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="B42" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="B43" />
+          </td>
+          <td>
+            <input type="text" name="text" size="2" id="B44" />
+          </td>
+        </tr>
+      </table>
+
+      <button id="my-btn" title="결과 보기" type="button">
+        결과!
+      </button>
+
+      <table id="result" style="display:none;">
+        <tr>
+          <th>Result</th>
+          <th>1열</th>
+          <th>2열</th>
+          <th>3열</th>
+          <th>4열</th>
+        </tr>
+        <tr>
+          <td>1행</td>
+          <td>
+            <span id="C11"></span>
+          </td>
+          <td>
+            <span id="C12"></span>
+          </td>
+          <td>
+            <span id="C13"></span>
+          </td>
+          <td>
+            <span id="C14"></span>
+          </td>
+        </tr>
+        <tr>
+          <td>2행</td>
+          <td>
+            <span id="C21"></span>
+          </td>
+          <td>
+            <span id="C22"></span>
+          </td>
+          <td>
+            <span id="C23"></span>
+          </td>
+          <td>
+            <span id="C24"></span>
+          </td>
+        </tr>
+        <tr>
+          <td>3행</td>
+          <td>
+            <span id="C31"></span>
+          </td>
+          <td>
+            <span id="C32"></span>
+          </td>
+          <td>
+            <span id="C33"></span>
+          </td>
+          <td>
+            <span id="C34"></span>
+          </td>
+        </tr>
+        <tr>
+          <td>4행</td>
+          <td>
+            <span id="C41"></span>
+          </td>
+          <td>
+            <span id="C42"></span>
+          </td>
+          <td>
+            <span id="C43"></span>
+          </td>
+          <td>
+            <span id="C44"></span>
+          </td>
+        </tr>
+      </table>
+
+      <h2>
+        HTML <ins><mark>Marked</mark></ins> Formatting
+      </h2>
+
+      <blockquote cite="http://www.worldwildlife.org/who/index.html">
+        For nearly 60 years, WWF has been protecting the future of nature. The
+        world's leading conservation organization, WWF works in 100 countries
+        and is supported by more than one million members in the United States
+        and close to five million globally.
+      </blockquote>
+
+      <p>
+        <strong
+          >This text is strong. 볼드는 의미없이 굵어지는거고 strong은 중요하다는
+          의미가 담긴다.
+        </strong>
+      </p>
+    </main>
+    <footer style="background-color:rgb(247, 171, 196);">
+      <address>
+        Implemented by Hyeonju Kong, software 201721782<br />
+        Visit us at:<br />
+        Example.com<br />
+        <a href="https://git.ajou.ac.kr/hyeonju/cg_course" target="_blank"
+          >This is a link to my git project.</a
+        >
+        Box 564, Disneyland<br />
+        USA
+      </address>
+    </footer>
+
+    <script src="matrix_mult.js"></script>
+  </body>
+</html>
