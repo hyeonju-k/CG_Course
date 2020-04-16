@@ -1,0 +1,57 @@
+%!
+
+100 100 moveto
+
+/boundary {
+currentpoint translate
+0 0 moveto
+255.11832 0 rlineto
+0 141.732 rlineto
+-255.11832 0 rlineto
+closepath
+0 setlinewidth 
+stroke
+} def
+
+/flower {
+gsave
+1 setlinewidth
+65 80 moveto
+currentpoint translate
+25 20 20 0 85 arc
+closepath
+30 rotate
+25 20 20 0 85 arc
+closepath
+3 {
+60 rotate
+25 20 20 0 85 arc 
+closepath
+30 rotate
+25 20 20 0 85 arc
+closepath} repeat
+gsave
+0 0.8 0.2 setrgbcolor
+fill
+grestore
+0 0.5 0.2 setrgbcolor
+stroke
+grestore
+} def
+
+/abc {
+/Helvetic-Oblique findfont
+10 scalefont
+setfont
+0 0 moveto
+(PostScript Programmer) show
+0 30 moveto
+(Hyeonju Kong) show
+} def
+
+boundary
+flower
+abc
+0.3 0.3 scale
+flower
+showpage
