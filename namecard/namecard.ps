@@ -1,57 +1,86 @@
 %!
 
-100 100 moveto
+/cm{
+28.3464567 mul
+} def
 
-/boundary {
-currentpoint translate
+/box{
+143 360 translate
 0 0 moveto
-255.11832 0 rlineto
-0 141.732 rlineto
--255.11832 0 rlineto
+9 cm 0 rlineto
+0 5 cm rlineto
+-9 cm 0 rlineto
 closepath
-0 setlinewidth 
+0 setlinewidth
 stroke
 } def
 
-/flower {
-gsave
+/clover{
+
 1 setlinewidth
-65 80 moveto
+%65 80 moveto
 currentpoint translate
-25 20 20 0 85 arc
-closepath
-30 rotate
-25 20 20 0 85 arc
-closepath
-3 {
-60 rotate
-25 20 20 0 85 arc 
-closepath
-30 rotate
-25 20 20 0 85 arc
-closepath} repeat
 gsave
-0 0.8 0.2 setrgbcolor
+4{                         % 큰 클로버
+25 20 20 0 85 arc
+closepath
+30 rotate
+25 20 20 0 85 arc
+closepath
+60 rotate
+} repeat
+0.2 0.6 0.2 setrgbcolor
 fill
+
 grestore
-0 0.5 0.2 setrgbcolor
-stroke
-grestore
+4{                % 작은 클로버
+20 20 18 0 64 arc
+closepath
+30 rotate
+20 20 18 0 64 arc
+closepath
+60 rotate} repeat
+0.3 0.7 0 setrgbcolor
+fill
+}def
+
+/setMyStr1{
+/Bookman-Demi findfont
+15 scalefont
+setfont
+/str1{
+9 cm (Hyeonju Kong) stringwidth add sub 2 div
 } def
 
-/abc {
-/Helvetic-Oblique findfont
-10 scalefont
-setfont
-0 0 moveto
-(PostScript Programmer) show
-0 30 moveto
+str1 3 cm moveto
 (Hyeonju Kong) show
 } def
 
-boundary
-flower
-abc
+/setMyStr2{
+/Helvetica-Oblique findfont
+13 scalefont
+setfont
+/str2{
+9 cm (PostScript Programmer) stringwidth add sub 2 div
+} def
+
+str2 1 cm moveto
+(PostScript Programmer)true charpath
+stroke
+} def
+
+/namecard
+{box
+gsave
+65 85 moveto
+clover
+-40 -63 moveto
 0.3 0.3 scale
-flower
-showpage
+clover
+grestore
+setMyStr1
+setMyStr2
+} def
+
+
+namecard
