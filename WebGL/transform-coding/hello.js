@@ -393,7 +393,9 @@ function renderScene() {
   }
   var vMat = [];
   mat4.lookAt(vMat, [0.0, 0.0, 2.0], [0.0, 0.0, 0.0], [0.0, 1.0, 0.0]);
+  console.log(vMat);
   var pMat = [];
+  console.log(pMat);
   mat4.identity(pMat);
   mat4.perspective(pMat, 3.14 / 2.0, 800.0 / 600.0, 0.5, 5);
   console.log("pMAT:", pMat);
