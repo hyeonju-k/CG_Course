@@ -1,8 +1,6 @@
 var gl;
 
 function testGLError(functionLastCalled) {
-  /* gl.getError returns the last error that occurred using WebGL for debugging */
-
   var lastError = gl.getError();
 
   if (lastError != gl.NO_ERROR) {
@@ -27,33 +25,24 @@ function initialiseGL(canvas) {
 }
 
 var shaderProgram;
+
 var vertexData = [
+  // Backface (RED/WHITE) -> z = 0.5
   -0.5,
   -0.5,
-  0.5,
-  1.0,
-  0.0,
-  1.0,
-  1.0, // First Triangle
   -0.5,
-  0.5,
-  0.5,
-  1.0,
-  1.0,
-  1.0,
-  1.0,
-  0.5,
-  0.5,
-  0.5,
   1.0,
   0.0,
   0.0,
   1.0,
-
+  0.0,
+  0.0,
   0.5,
   0.5,
   -0.5,
   1.0,
+  0.0,
+  0.0,
   1.0,
   1.0,
   1.0,
@@ -62,8 +51,19 @@ var vertexData = [
   -0.5,
   1.0,
   0.0,
+  0.0,
   1.0,
-  1.0, // Second Triangle
+  1.0,
+  -0.0,
+  -0.5,
+  -0.5,
+  -0.5,
+  1.0,
+  0.0,
+  0.0,
+  1.0,
+  -0.0,
+  -0.0,
   -0.5,
   0.5,
   -0.5,
@@ -71,10 +71,293 @@ var vertexData = [
   0.0,
   0.0,
   1.0,
-
-  // You need to make here!
+  -0.0,
+  1.0,
+  0.5,
+  0.5,
+  -0.5,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  // Front (BLUE/WHITE) -> z = 0.5
+  -0.5,
+  -0.5,
+  0.5,
+  0.0,
+  0.0,
+  1.0,
+  1.0,
+  -0.0,
+  -0.0,
+  0.5,
+  0.5,
+  0.5,
+  0.0,
+  0.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  0.5,
+  -0.5,
+  0.5,
+  0.0,
+  0.0,
+  1.0,
+  1.0,
+  1.0,
+  -0.0,
+  -0.5,
+  -0.5,
+  0.5,
+  0.0,
+  0.0,
+  1.0,
+  1.0,
+  -0.0,
+  -0.0,
+  -0.5,
+  0.5,
+  0.5,
+  0.0,
+  0.0,
+  1.0,
+  1.0,
+  -0.0,
+  1.0,
+  0.5,
+  0.5,
+  0.5,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  // LEFT (GREEN/WHITE) -> z = 0.5
+  -0.5,
+  -0.5,
+  -0.5,
+  0.0,
+  1.0,
+  0.0,
+  1.0,
+  -0.0,
+  -0.0,
+  -0.5,
+  0.5,
+  0.5,
+  0.0,
+  1.0,
+  0.0,
+  1.0,
+  1.0,
+  1.0,
+  -0.5,
+  0.5,
+  -0.5,
+  0.0,
+  1.0,
+  0.0,
+  1.0,
+  1.0,
+  0.0,
+  -0.5,
+  -0.5,
+  -0.5,
+  0.0,
+  1.0,
+  0.0,
+  1.0,
+  -0.0,
+  -0.0,
+  -0.5,
+  -0.5,
+  0.5,
+  0.0,
+  1.0,
+  0.0,
+  1.0,
+  -0.0,
+  1.0,
+  -0.5,
+  0.5,
+  0.5,
+  0.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  // RIGHT (YELLOE/WHITE) -> z = 0.5
+  0.5,
+  -0.5,
+  -0.5,
+  1.0,
+  1.0,
+  0.0,
+  1.0,
+  -0.0,
+  -0.0,
+  0.5,
+  0.5,
+  0.5,
+  1.0,
+  1.0,
+  0.0,
+  1.0,
+  1.0,
+  1.0,
+  0.5,
+  0.5,
+  -0.5,
+  1.0,
+  1.0,
+  0.0,
+  1.0,
+  1.0,
+  0.0,
+  0.5,
+  -0.5,
+  -0.5,
+  1.0,
+  1.0,
+  0.0,
+  1.0,
+  -0.0,
+  -0.0,
+  0.5,
+  -0.5,
+  0.5,
+  1.0,
+  1.0,
+  0.0,
+  1.0,
+  -0.0,
+  1.0,
+  0.5,
+  0.5,
+  0.5,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  // BOTTON (MAGENTA/WHITE) -> z = 0.5
+  -0.5,
+  -0.5,
+  -0.5,
+  1.0,
+  0.0,
+  1.0,
+  1.0,
+  -0.0,
+  -0.0,
+  0.5,
+  -0.5,
+  0.5,
+  1.0,
+  0.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  0.5,
+  -0.5,
+  -0.5,
+  1.0,
+  0.0,
+  1.0,
+  1.0,
+  1.0,
+  0.0,
+  -0.5,
+  -0.5,
+  -0.5,
+  1.0,
+  0.0,
+  1.0,
+  1.0,
+  -0.0,
+  -0.0,
+  -0.5,
+  -0.5,
+  0.5,
+  1.0,
+  0.0,
+  1.0,
+  1.0,
+  -0.0,
+  1.0,
+  0.5,
+  -0.5,
+  0.5,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  // TOP (CYAN/WHITE) -> z = 0.5
+  -0.5,
+  0.5,
+  -0.5,
+  0.0,
+  1.0,
+  1.0,
+  1.0,
+  -0.0,
+  -0.0,
+  0.5,
+  0.5,
+  0.5,
+  0.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  0.5,
+  0.5,
+  -0.5,
+  0.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  0.0,
+  -0.5,
+  0.5,
+  -0.5,
+  0.0,
+  1.0,
+  1.0,
+  1.0,
+  -0.0,
+  -0.0,
+  -0.5,
+  0.5,
+  0.5,
+  0.0,
+  1.0,
+  1.0,
+  1.0,
+  -0.0,
+  1.0,
+  0.5,
+  0.5,
+  0.5,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
 ];
-var elementData = [0, 1];
 
 function createCubePos(sx, sy, sz) {
   // 1.0 1.0 1.0 쓰면
@@ -92,21 +375,27 @@ function createCubePos(sx, sy, sz) {
     color[0],
     color[1],
     color[2],
-    color[3], // v0
+    color[3],
+    1.0,
+    1.0, // v0
     -sx / 2,
     sy / 2,
     sz / 2,
     color[4],
     color[5],
     color[6],
-    color[7], // v1
+    color[7],
+    -0.0,
+    1.0, // v1
     -sx / 2,
     -sy / 2,
     sz / 2,
     color[8],
     color[9],
     color[10],
-    color[11], // v2
+    color[11],
+    -0.0,
+    -0.0, // v2
 
     sx / 2,
     sy / 2,
@@ -114,21 +403,27 @@ function createCubePos(sx, sy, sz) {
     color[12],
     color[13],
     color[14],
-    color[15], // v0
+    color[15],
+    1.0,
+    1.0, // v0
     -sx / 2,
     -sy / 2,
     sz / 2,
     color[16],
     color[17],
     color[18],
-    color[19], // v2
+    color[19],
+    -0.0,
+    -0.0, // v2
     sx / 2,
     -sy / 2,
     sz / 2,
     color[20],
     color[21],
     color[22],
-    color[23], // v3
+    color[23],
+    1.0,
+    -0.0, // v3
 
     sx / 2,
     sy / 2,
@@ -136,21 +431,27 @@ function createCubePos(sx, sy, sz) {
     color[24],
     color[25],
     color[26],
-    color[27], // v0
+    color[27],
+    1.0,
+    1.0, // v0
     sx / 2,
     -sy / 2,
     sz / 2,
     color[28],
     color[29],
     color[30],
-    color[31], // v3
+    color[31],
+    -0.0,
+    1.0, // v3
     sx / 2,
     -sy / 2,
     -sz / 2,
     color[32],
     color[33],
     color[34],
-    color[35], // v4
+    color[35],
+    -0.0,
+    -0.0, // v4
 
     sx / 2,
     sy / 2,
@@ -158,21 +459,27 @@ function createCubePos(sx, sy, sz) {
     color[36],
     color[37],
     color[38],
-    color[39], // v0
+    color[39],
+    1.0,
+    1.0, // v0
     sx / 2,
     -sy / 2,
     -sz / 2,
     color[40],
     color[41],
     color[42],
-    color[43], // v4
+    color[43],
+    -0.0,
+    -0.0, // v4
     sx / 2,
     sy / 2,
     -sz / 2,
     color[44],
     color[45],
     color[46],
-    color[47], // v5
+    color[47],
+    1.0,
+    0.0, // v5
 
     sx / 2,
     sy / 2,
@@ -180,21 +487,27 @@ function createCubePos(sx, sy, sz) {
     color[48],
     color[49],
     color[50],
-    color[51], // v0
+    color[51],
+    1.0,
+    1.0, // v0
     sx / 2,
     sy / 2,
     -sz / 2,
     color[52],
     color[53],
     color[54],
-    color[53], // v5
+    color[53],
+    1.0,
+    0.0, // v5
     -sx / 2,
     sy / 2,
     -sz / 2,
     color[56],
     color[57],
     color[58],
-    color[59], // v6
+    color[59],
+    -0.0,
+    -0.0, // v6
 
     sx / 2,
     sy / 2,
@@ -202,21 +515,27 @@ function createCubePos(sx, sy, sz) {
     color[60],
     color[61],
     color[62],
-    color[63], // v0
+    color[63],
+    1.0,
+    1.0, // v0
     -sx / 2,
     sy / 2,
     sz / 2,
     color[64],
     color[65],
     color[66],
-    color[67], // v1
+    color[67],
+    -0.0,
+    1.0, // v1
     -sx / 2,
     sy / 2,
     -sz / 2,
     color[68],
     color[69],
     color[70],
-    color[71], // v6
+    color[71],
+    -0.0,
+    -0.0, // v6
 
     -sx / 2,
     -sy / 2,
@@ -224,21 +543,27 @@ function createCubePos(sx, sy, sz) {
     color[72],
     color[73],
     color[74],
-    color[75], // v7
+    color[75],
+    -0.0,
+    -0.0, // v7
     -sx / 2,
     -sy / 2,
     sz / 2,
     color[76],
     color[77],
     color[78],
-    color[78], // v2
+    color[78],
+    -0.0,
+    1.0, // v2
     sx / 2,
     -sy / 2,
     sz / 2,
     color[80],
     color[81],
     color[82],
-    color[83], // v3
+    color[83],
+    1.0,
+    1.0, // v3
 
     -sx / 2,
     -sy / 2,
@@ -246,21 +571,27 @@ function createCubePos(sx, sy, sz) {
     color[84],
     color[85],
     color[86],
-    color[87], // v7
+    color[87],
+    -0.0,
+    -0.0, // v7
     sx / 2,
     -sy / 2,
     sz / 2,
     color[88],
     color[89],
     color[90],
-    color[91], // v3
+    color[91],
+    1.0,
+    1.0, // v3
     sx / 2,
     -sy / 2,
     -sz / 2,
     color[92],
     color[93],
     color[94],
-    color[95], // v4
+    color[95],
+    1.0,
+    0.0, // v4
 
     -sx / 2,
     -sy / 2,
@@ -268,21 +599,27 @@ function createCubePos(sx, sy, sz) {
     color[96],
     color[97],
     color[98],
-    color[99], // v7
+    color[99],
+    -0.0,
+    -0.0, // v7
     -sx / 2,
     sy / 2,
     sz / 2,
     color[100],
     color[101],
     color[102],
-    color[103], // v1
+    color[103],
+    1.0,
+    1.0, // v1
     -sx / 2,
     -sy / 2,
     sz / 2,
     color[104],
     color[105],
     color[106],
-    color[107], // v2
+    color[107],
+    -0.0,
+    1.0, // v2
 
     -sx / 2,
     -sy / 2,
@@ -290,21 +627,27 @@ function createCubePos(sx, sy, sz) {
     color[108],
     color[109],
     color[110],
-    color[111], // v7
+    color[111],
+    -0.0,
+    -0.0, // v7
     -sx / 2,
     sy / 2,
     sz / 2,
     color[112],
     color[113],
     color[114],
-    color[115], // v1
+    color[115],
+    1.0,
+    1.0, // v1
     -sx / 2,
     sy / 2,
     -sz / 2,
     color[116],
     color[117],
     color[118],
-    color[119], // v6
+    color[119],
+    1.0,
+    0.0, // v6
 
     -sx / 2,
     -sy / 2,
@@ -312,21 +655,27 @@ function createCubePos(sx, sy, sz) {
     color[120],
     color[121],
     color[122],
-    color[123], // v7
+    color[123],
+    -0.0,
+    -0.0, // v7
     -sx / 2,
     sy / 2,
     -sz / 2,
     color[124],
     color[125],
     color[126],
-    color[127], // v6
+    color[127],
+    -0.0,
+    1.0, // v6
     sx / 2,
     sy / 2,
     -sz / 2,
     color[128],
     color[129],
     color[130],
-    color[131], // v5
+    color[131],
+    1.0,
+    1.0, // v5
 
     -sx / 2,
     -sy / 2,
@@ -334,56 +683,103 @@ function createCubePos(sx, sy, sz) {
     color[132],
     color[133],
     color[134],
-    color[135], // v7
+    color[135],
+    0.0,
+    0.0, // v7
     sx / 2,
     sy / 2,
     -sz / 2,
     color[136],
     color[137],
     color[138],
-    color[139], // v5
+    color[139],
+    1.0,
+    1.0, // v5
     sx / 2,
     -sy / 2,
     -sz / 2,
     color[140],
     color[141],
     color[142],
-    color[143], // v4
+    color[143],
+    1.0, // v4
+    -0.0,
   ];
 
   return vertexArray;
 }
 
 function initialiseBuffer() {
-  // var vertextData=[-0.4, -0.4, 0.0, 0.4, -0.4, 0.0,
-  // 0.0, 0.4, 0.0]; // triangle
   gl.vertexBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, gl.vertexBuffer);
-  //gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexData), gl.STATIC_DRAW);
   gl.bufferData(
     gl.ARRAY_BUFFER,
     new Float32Array(createCubePos(1.0, 1.0, 1.0)),
     gl.STATIC_DRAW
   );
 
-  gl.elementBuffer = gl.createBuffer();
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.elementBuffer);
-  gl.bufferData(
-    gl.ELEMENT_ARRAY_BUFFER,
-    new Uint16Array(elementData),
-    gl.STATIC_DRAW
+  var texture = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+  // Fill the texture with a 1x1 red pixel.
+  /*
+  const texData = new Uint8Array([
+    255,
+    0,
+    0,
+    255,
+    0,
+    255,
+    0,
+    255,
+    0,
+    0,
+    255,
+    255,
+    255,
+    255,
+    0,
+    255,
+  ]);
+  gl.texImage2D(
+    gl.TEXTURE_2D,
+    0,
+    gl.RGBA,
+    2,
+    2,
+    0,
+    gl.RGBA,
+    gl.UNSIGNED_BYTE,
+    texData
   );
+  //gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST_MIPMAP_NEAREST); // It is default
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.MIRRORED_REPEAT);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.MIRRORED_REPEAT);
+  */
+  // Asynchronously load an image
 
-  return testGLError("initialiseBuffers");
+  var image = new Image();
+  image.src = "photo.jpg";
+  image.addEventListener("load", function () {
+    // Now that the image has loaded make copy it to the texture.
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+    gl.generateMipmap(gl.TEXTURE_2D);
+  });
+
+  return testGLError("initialiseBuffers and texture initialize");
 }
 
 function initialiseShaders() {
   var fragmentShaderSource =
     "\
 			varying highp vec4 color; \
+			varying mediump vec2 texCoord;\
+			uniform sampler2D sampler2d;\
 			void main(void) \
 			{ \
-				gl_FragColor = color; \
+				gl_FragColor = 0.0 * color + 1.0 * texture2D(sampler2d, texCoord); \
 			}";
 
   gl.fragShader = gl.createShader(gl.FRAGMENT_SHADER);
@@ -402,15 +798,19 @@ function initialiseShaders() {
   var vertexShaderSource =
     "\
 			attribute highp vec4 myVertex; \
-			attribute highp vec4 myColor; \
-			uniform mediump mat4 transformationMatrix; \
-			uniform mediump mat4 virwMatrix; \
-			uniform mediump mat4 projMatrix; \
-			varying highp vec4 color;\
+      attribute highp vec4 myColor; \
+  attribute highp vec2 myUV;\
+			uniform mediump mat4 mMat; \
+			uniform mediump mat4 vMat; \
+			uniform mediump mat4 pMat; \
+			varying  highp vec4 color;\
+			varying mediump vec2 texCoord;\
 			void main(void)  \
 			{ \
-				gl_Position = transformationMatrix * myVertex; \
+				gl_Position = pMat * vMat * mMat * myVertex; \
+				gl_PointSize = 8.0; \
 				color = myColor; \
+				texCoord = myUV; \
 			}";
 
   gl.vertexShader = gl.createShader(gl.VERTEX_SHADER);
@@ -433,6 +833,7 @@ function initialiseShaders() {
   // Bind the custom vertex attribute "myVertex" to location 0
   gl.bindAttribLocation(gl.programObject, 0, "myVertex");
   gl.bindAttribLocation(gl.programObject, 1, "myColor");
+  gl.bindAttribLocation(gl.programObject, 2, "myUV");
   // Link the program
   gl.linkProgram(gl.programObject);
   // Check if linking succeeded in a similar way we checked for compilation errors
@@ -444,74 +845,64 @@ function initialiseShaders() {
   }
 
   gl.useProgram(gl.programObject);
-  console.log(
-    "myVertex Location is: ",
-    gl.getAttribLocation(gl.programObject, "myColor")
-  );
+  // console.log("myVertex Location is: ", gl.getAttribLocation(gl.programObject, "myColor"));
 
   return testGLError("initialiseShaders");
 }
 
-var rotY = 0.0;
+flag_animation = 0;
+function toggleAnimation() {
+  flag_animation ^= 1;
+}
+
+rotY = 0.0;
 
 function renderScene() {
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
+  gl.clearDepth(1.0); // Added for depth Test
 
-  gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT); // Added for depth Test
+  gl.enable(gl.DEPTH_TEST); // Added for depth Test
 
-  var matrixLocation = gl.getUniformLocation(
-    gl.programObject,
-    "transformationMatrix"
-  );
-  var transformationMatrix = [
-    Math.cos(rotY),
-    0.0,
-    -Math.sin(rotY),
-    0.0,
-    0.0,
-    1.0,
-    0.0,
-    0.0,
-    Math.sin(rotY),
-    0.0,
-    Math.cos(rotY),
-    0.5, // For pseudo perspective View
-    0.0,
-    0.0,
-    0.0,
-    1.0,
-  ];
-  rotY += 0.01;
+  var mMatLocation = gl.getUniformLocation(gl.programObject, "mMat");
+  var vMatLocation = gl.getUniformLocation(gl.programObject, "vMat");
+  var pMatLocation = gl.getUniformLocation(gl.programObject, "pMat");
+  var mMat = [];
+  mat4.translate(mMat, mMat, [0.5, 0.0, 0.0]);
+  mat4.fromYRotation(mMat, rotY);
+  if (flag_animation) {
+    rotY += 0.01;
+  }
+  var vMat = [];
+  mat4.lookAt(vMat, [0.0, 0.0, 2.0], [0.0, 0.0, 0.0], [0.0, 1.0, 0.0]);
+  var pMat = [];
+  mat4.identity(pMat);
+  mat4.perspective(pMat, 3.14 / 2.0, 800.0 / 600.0, 0.5, 5);
 
-  gl.uniformMatrix4fv(matrixLocation, gl.FALSE, transformationMatrix);
+  gl.uniformMatrix4fv(mMatLocation, gl.FALSE, mMat);
+  gl.uniformMatrix4fv(vMatLocation, gl.FALSE, vMat);
+  gl.uniformMatrix4fv(pMatLocation, gl.FALSE, pMat);
 
   if (!testGLError("gl.uniformMatrix4fv")) {
     return false;
   }
+  //vertexData[0] += 0.01;
 
   gl.bindBuffer(gl.ARRAY_BUFFER, gl.vertexBuffer);
   gl.enableVertexAttribArray(0);
-  gl.vertexAttribPointer(0, 3, gl.FLOAT, gl.FALSE, 28, 0);
+  gl.vertexAttribPointer(0, 3, gl.FLOAT, gl.FALSE, 36, 0);
   gl.enableVertexAttribArray(1);
-  gl.vertexAttribPointer(1, 4, gl.FLOAT, gl.FALSE, 28, 12);
-  // gl.vertexAttrib4f(1, Math.random(), 0.0, 1.0, 1.0);
+  gl.vertexAttribPointer(1, 4, gl.FLOAT, gl.FALSE, 36, 12);
+  gl.enableVertexAttribArray(2);
+  gl.vertexAttribPointer(2, 2, gl.FLOAT, gl.FALSE, 36, 28);
+  //gl.vertexAttrib4f(1, 1.0, 0.0, 1.0, 1.0);
 
   if (!testGLError("gl.vertexAttribPointer")) {
     return false;
   }
 
-  // gl.lineWidth(6.0);  // It is not working at Chrome!
-  // gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT,0);
-  // gl.drawArrays(gl.POINTS, 0, 6);
-  // gl.drawArrays(gl.LINES, 0, 6);
-  //gl.drawArrays(gl.LINE_STRIP, 0, 36);
   gl.drawArrays(gl.TRIANGLES, 0, 36);
-  console.log(
-    "Enum for Primitive Assumbly",
-    gl.TRIANGLES,
-    gl.TRIANGLE,
-    gl.POINTS
-  );
+  // gl.drawArrays(gl.LINE_STRIP, 0, 36);
   if (!testGLError("gl.drawArrays")) {
     return false;
   }
@@ -534,6 +925,7 @@ function main() {
     return;
   }
 
+  // renderScene();
   // Render loop
   requestAnimFrame = (function () {
     return (
